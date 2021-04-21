@@ -1,0 +1,15 @@
+{
+  "to_try": [
+    {
+      "id": 1,
+      "priority": 1,
+      "description": "Newest React concepts that I'm not familiar with"
+    },
+    {
+      "id": 2,
+      "priority": 2,
+      "description": "Web components"
+    }
+  ],
+  "tried": []
+}
