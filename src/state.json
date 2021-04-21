@@ -24,6 +24,16 @@
       "id": 5,
       "priority": 5,
       "description": "Gatsby"
+    },
+    {
+      "id": 6,
+      "priority": 6,
+      "description": "Storybook"
+    },
+    {
+      "id": 7,
+      "priority": 7,
+      "description": "Server side rendering"
     }
   ],
   "tried": []
