@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const STORAGE_KEY = 'loggedVisitor1';
+const STORAGE_KEY = 'visitorName';
 
 export const useLoggedVisitor = () => {
   const [visitor, setVisitor] = useState(
