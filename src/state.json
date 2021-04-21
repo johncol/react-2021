@@ -2,13 +2,18 @@
   "to_try": [
     {
       "id": 1,
-      "priority": 1,
+      "priority": 2,
       "description": "Newest React concepts that I'm not familiar with"
     },
     {
       "id": 2,
-      "priority": 2,
+      "priority": 3,
       "description": "Web components"
+    },
+    {
+      "id": 3,
+      "priority": 1,
+      "description": "React hooks review"
     }
   ],
   "tried": []
