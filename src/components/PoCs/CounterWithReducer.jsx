@@ -1,4 +1,4 @@
-import { useReducer } from 'react';
+import { useEffect, useReducer, useRef } from 'react';
 import { CounterButton } from './Shared/CounterButton';
 import { DisplayCounter } from './Shared/DisplayCounter';
 
@@ -17,6 +17,12 @@ const initialValue = { value: 10 };
 
 export const CounterWithReducer = () => {
   const [counter, dispatch] = useReducer(reducer, initialValue);
+
+  const rendersCounter = useRef({ value: 0 });
+  useEffect(() => {
+    rendersCounter.current.value++;
+    console.log('Renders count:', JSON.stringify(rendersCounter.current));
+  });
 
   return (
     <div className="card">
