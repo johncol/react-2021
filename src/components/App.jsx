@@ -10,7 +10,7 @@ export const App = () => {
   return (
     <div className="app container content">
       <Router>
-        <Route exact path="/" component={RedirectToProperComponent} />
+        <Route exact path="/" component={Redirecter} />
         <Route path="/login" component={Login} />
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/lazy-state" component={LazyState} />
@@ -19,7 +19,7 @@ export const App = () => {
   );
 };
 
-const RedirectToProperComponent = () => {
+const Redirecter = () => {
   const [loggedVisitor] = useLoggedVisitor();
   if (!loggedVisitor) {
     return <Redirect to="/login" />;
