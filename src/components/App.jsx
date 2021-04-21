@@ -3,6 +3,7 @@ import { Login } from './Login/Login';
 import { Dashboard } from './Dashboard/Dashboard';
 import { LazyState } from './PoCs/LazyState';
 import { useLoggedVisitor } from '../hooks/useLoggedVisitor';
+import { UseContextSample } from './PoCs/UseContextSample';
 
 import './App.css';
 
@@ -14,6 +15,7 @@ export const App = () => {
         <Route path="/login" component={Login} />
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/lazy-state" component={LazyState} />
+        <Route path="/use-context" component={UseContextSample} />
       </Router>
     </div>
   );
