@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { CounterButton } from './Shared/CounterButton';
+import { DisplayCounter } from './Shared/DisplayCounter';
 
 const someExpensiveCalculation = (limit) => {
   let counter = 0;
@@ -8,7 +10,7 @@ const someExpensiveCalculation = (limit) => {
   return counter;
 };
 
-export const LazyState = () => {
+export const CounterWithLazyState = () => {
   const [counter, setCounter] = useState(() => {
     const initialValue = someExpensiveCalculation(100000);
     return initialValue;
@@ -31,21 +33,5 @@ export const LazyState = () => {
         </div>
       </div>
     </div>
-  );
-};
-
-const DisplayCounter = ({ value }) => {
-  return (
-    <>
-      Counter: <span className="tag is-info">{value}</span>
-    </>
-  );
-};
-
-const CounterButton = ({ children, onClick }) => {
-  return (
-    <button className="button is-link is-light" onClick={onClick}>
-      {children}
-    </button>
   );
 };
