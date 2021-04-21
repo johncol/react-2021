@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useDebugValue, useState } from 'react';
 
 const STORAGE_KEY = 'visitorName';
 
@@ -11,6 +11,8 @@ export const useLoggedVisitor = () => {
     localStorage.setItem(STORAGE_KEY, newLoggedVisitor);
     setVisitor(newLoggedVisitor);
   };
+
+  useDebugValue(visitor);
 
   return [visitor, updateLoggedVisitor];
 };
