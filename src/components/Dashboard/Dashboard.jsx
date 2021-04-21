@@ -1,10 +1,11 @@
 import { Redirect } from 'react-router';
 import { useLoggedVisitor } from '../../hooks/useLoggedVisitor';
 import { List } from './../List/List';
-import state from '../../state.json';
+import { useJsonLocalState } from '../../hooks/useJsonLocalState';
 
 export const Dashboard = () => {
   const [loggedVisitor] = useLoggedVisitor();
+  const [state] = useJsonLocalState();
   if (!loggedVisitor) {
     return <Redirect to="/" />;
   }
