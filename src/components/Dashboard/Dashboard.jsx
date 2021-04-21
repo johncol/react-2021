@@ -1,7 +1,7 @@
 import { Redirect } from 'react-router';
 import { useLoggedVisitor } from '../../hooks/useLoggedVisitor';
-import state from '../../state.json';
 import { List } from './../List/List';
+import state from '../../state.json';
 
 export const Dashboard = () => {
   const [loggedVisitor] = useLoggedVisitor();

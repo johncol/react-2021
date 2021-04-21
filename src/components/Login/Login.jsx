@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { useLoggedVisitor } from '../../hooks/useLoggedVisitor';
 import { AlreaduLoggedVisitor } from './AlreadyLoggedVisitor';
 
-import './Login.css';
-
 export const Login = () => {
   const [visitor, setVisitor] = useState('');
   const [loggedVisitor, setLoggedVisitor] = useLoggedVisitor();
@@ -11,7 +9,6 @@ export const Login = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log('Visitor: ', visitor);
     setLoggedVisitor(visitor);
   };
 
