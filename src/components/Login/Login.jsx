@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useLoggedVisitor } from '../../hooks/useLoggedVisitor';
-import { AlreaduLoggedVisitor } from './AlreadyLoggedVisitor';
+import { AlreadyLoggedVisitor } from './AlreadyLoggedVisitor';
 
 export const Login = () => {
   const [visitor, setVisitor] = useState('');
@@ -13,7 +13,7 @@ export const Login = () => {
   };
 
   if (loggedVisitor) {
-    return <AlreaduLoggedVisitor />;
+    return <AlreadyLoggedVisitor />;
   }
 
   return (

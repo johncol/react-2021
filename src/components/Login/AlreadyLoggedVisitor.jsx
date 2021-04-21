@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useLoggedVisitor } from '../../hooks/useLoggedVisitor';
 
-export const AlreaduLoggedVisitor = () => {
+export const AlreadyLoggedVisitor = () => {
   const [loggedVisitor] = useLoggedVisitor();
   return (
     <div className="card">
