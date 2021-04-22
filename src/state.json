@@ -11,11 +11,6 @@
       "description": "Web components"
     },
     {
-      "id": 3,
-      "priority": 1,
-      "description": "React hooks review"
-    },
-    {
       "id": 4,
       "priority": 4,
       "description": "Web vitals"
@@ -36,5 +31,11 @@
       "description": "Server side rendering"
     }
   ],
-  "tried": []
+  "tried": [
+    {
+      "id": 3,
+      "priority": 1,
+      "description": "React hooks review"
+    }
+  ]
 }
