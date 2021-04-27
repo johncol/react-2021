@@ -2,8 +2,28 @@
   padding: 0 15px 15px;
 }
 
-.list ol {
+.content .list ol:not([type]) {
   padding: 0;
   margin: 0;
-  margin-left: 10px;
+  list-style-type: none;
+}
+
+.content .list .card {
+  display: flex;
+}
+
+.content .list .card + .card {
+  margin-top: 10px;
+}
+
+.content .list .card-footer {
+  margin-left: auto;
+  border-top: none;
+  border-left: 1px solid #ededed;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 0.25rem;
+}
+
+.content .list .card-footer a {
+  transition: color 0.15s ease-in;
 }

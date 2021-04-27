@@ -1,13 +1,9 @@
-import { useDebugValue } from 'react';
-import state from './../state.json';
+import { useDebugValue, useState } from 'react';
+import jsonState from './../state.json';
 
-export const useJsonLocalState = (key) => {
+export const useJsonLocalState = () => {
+  const [state, setState] = useState(JSON.parse(JSON.stringify(jsonState)));
   useDebugValue(state);
 
-  return [
-    key ? state[key] : state,
-    () => {
-      throw new Error('Unsupported setter in useJsonFileState hook');
-    },
-  ];
+  return [state, setState];
 };

@@ -1,7 +1,8 @@
 import { useMemo } from 'react';
 import './List.css';
+import { ListItem } from './ListItem';
 
-export const List = ({ title, items, primary }) => {
+export const List = ({ title, items, primary, done, onToggle }) => {
   const hasItems = items && items.length > 0;
   const itemsSortedByPriority = useMemo(() => sortByPriority(items), [items]);
 
@@ -12,11 +13,16 @@ export const List = ({ title, items, primary }) => {
         {hasItems ? (
           <ol>
             {itemsSortedByPriority.map((item) => (
-              <li key={item.id}>{item.description}</li>
+              <ListItem
+                key={item.id}
+                value={item.description}
+                done={done}
+                onActionTrigger={() => onToggle(item)}
+              />
             ))}
           </ol>
         ) : (
-          <>No items yet</>
+          <>No items here</>
         )}
       </div>
     </section>
