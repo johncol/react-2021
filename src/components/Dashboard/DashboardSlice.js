@@ -6,6 +6,16 @@ const Field = {
   TO_TRY: 'toTry',
 };
 
+const toggleItem = (state, item, setDone) => {
+  const [source, target] = setDone
+    ? [Field.TO_TRY, Field.TRIED]
+    : [Field.TRIED, Field.TO_TRY];
+  return {
+    [source]: state[source].filter((i) => i.id !== item.id),
+    [target]: state[target].concat(item),
+  };
+};
+
 const slice = createSlice({
   name: 'dashboard',
 
@@ -15,16 +25,8 @@ const slice = createSlice({
   },
 
   reducers: {
-    toggle: (state, action) => {
-      const { item, setDone } = action.payload;
-      const [source, target] = setDone
-        ? [Field.TO_TRY, Field.TRIED]
-        : [Field.TRIED, Field.TO_TRY];
-      return {
-        [source]: state[source].filter((i) => i.id !== item.id),
-        [target]: state[target].concat(item),
-      };
-    },
+    markAsTried: (state, action) => toggleItem(state, action.payload, true),
+    markAsToTry: (state, action) => toggleItem(state, action.payload, false),
   },
 });
 

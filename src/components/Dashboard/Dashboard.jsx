@@ -23,13 +23,13 @@ export const Dashboard = () => {
         title="Things to try"
         primary
         done={false}
-        onToggle={(item) => dispatch(actions.toggle({ item, setDone: true }))}
+        onToggle={(item) => dispatch(actions.markAsTried(item))}
       />
       <List
         items={itemsTried}
         title="Tried"
         done={true}
-        onToggle={(item) => dispatch(actions.toggle({ item, setDone: false }))}
+        onToggle={(item) => dispatch(actions.markAsToTry(item))}
       />
     </>
   );
