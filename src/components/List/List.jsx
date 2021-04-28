@@ -30,5 +30,5 @@ export const List = ({ title, items, primary, done, onToggle }) => {
 };
 
 const sortByPriority = (items) => {
-  return items.sort((item1, item2) => item1.priority - item2.priority);
+  return [...items].sort((item1, item2) => item1.priority - item2.priority);
 };

@@ -1,39 +1,35 @@
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Redirect } from 'react-router';
 import { useLoggedVisitor } from '../../hooks/useLoggedVisitor';
 import { List } from './../List/List';
-import { useJsonLocalState } from '../../hooks/useJsonLocalState';
+import { actions, selectors } from './DashboardSlice';
 
 export const Dashboard = () => {
   const [loggedVisitor] = useLoggedVisitor();
-  const [state, setState] = useJsonLocalState();
+  const dispatch = useDispatch();
+  const itemsToTry = useSelector(selectors.toTry);
+  const itemsTried = useSelector(selectors.tried);
+
   if (!loggedVisitor) {
     return <Redirect to="/" />;
   }
-
-  const toggle = (item, setDone) => {
-    const source = setDone ? 'to_try' : 'tried';
-    const target = setDone ? 'tried' : 'to_try';
-    setState((items) => ({
-      [source]: items[source].filter((i) => i.id !== item.id),
-      [target]: items[target].concat(item),
-    }));
-  };
 
   return (
     <>
       <h1>Welcome {loggedVisitor}</h1>
       <List
-        items={state.to_try}
+        items={itemsToTry}
         title="Things to try"
         primary
         done={false}
-        onToggle={(item) => toggle(item, true)}
+        onToggle={(item) => dispatch(actions.toggle({ item, setDone: true }))}
       />
       <List
-        items={state.tried}
+        items={itemsTried}
         title="Tried"
         done={true}
-        onToggle={(item) => toggle(item, false)}
+        onToggle={(item) => dispatch(actions.toggle({ item, setDone: false }))}
       />
     </>
   );
