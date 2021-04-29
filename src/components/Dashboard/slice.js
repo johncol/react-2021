@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import jsonState from './../../state.json';
+import jsonState from '../../state.json';
 
 const Field = {
   TRIED: 'tried',
@@ -8,7 +8,7 @@ const Field = {
 
 const excludeItem = (item) => (i) => i.id !== item.id;
 
-const slice = createSlice({
+export const slice = createSlice({
   name: 'dashboard',
 
   initialState: {
@@ -33,7 +33,7 @@ const slice = createSlice({
   },
 });
 
-export const { actions, reducer } = slice;
+export const { actions } = slice;
 
 export const selectors = {
   tried: (state) => state[slice.name][Field.TRIED],

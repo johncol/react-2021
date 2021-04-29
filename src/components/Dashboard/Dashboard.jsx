@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Redirect } from 'react-router';
 import { useLoggedVisitor } from '../../hooks/useLoggedVisitor';
 import { List } from './../List/List';
-import { actions, selectors } from './DashboardSlice';
+import { actions, selectors } from './slice';
 
 export const Dashboard = () => {
   const [loggedVisitor] = useLoggedVisitor();
