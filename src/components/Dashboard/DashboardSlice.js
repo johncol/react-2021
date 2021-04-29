@@ -6,27 +6,30 @@ const Field = {
   TO_TRY: 'toTry',
 };
 
-const toggleItem = (state, item, setDone) => {
-  const [source, target] = setDone
-    ? [Field.TO_TRY, Field.TRIED]
-    : [Field.TRIED, Field.TO_TRY];
-  return {
-    [source]: state[source].filter((i) => i.id !== item.id),
-    [target]: state[target].concat(item),
-  };
-};
+const excludeItem = (item) => (i) => i.id !== item.id;
 
 const slice = createSlice({
   name: 'dashboard',
 
   initialState: {
-    [Field.TRIED]: jsonState.tried,
     [Field.TO_TRY]: jsonState.to_try,
+    [Field.TRIED]: jsonState.tried,
   },
 
   reducers: {
-    markAsTried: (state, action) => toggleItem(state, action.payload, true),
-    markAsToTry: (state, action) => toggleItem(state, action.payload, false),
+    markAsTried: (state, { payload: item }) => {
+      return {
+        toTry: state.toTry.filter(excludeItem(item)),
+        tried: state.tried.concat(item),
+      };
+    },
+
+    markAsToTry: (state, { payload: item }) => {
+      return {
+        toTry: state.toTry.concat(item),
+        tried: state.tried.filter(excludeItem(item)),
+      };
+    },
   },
 });
 
