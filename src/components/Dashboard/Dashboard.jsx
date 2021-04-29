@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Redirect } from 'react-router';
 import { useLoggedVisitor } from '../../hooks/useLoggedVisitor';
 import { List } from './../List/List';
+import { ItemsGenerator } from './ItemsGenerator';
 import { actions, selectors } from './slice';
 
 export const Dashboard = () => {
@@ -18,6 +19,7 @@ export const Dashboard = () => {
   return (
     <>
       <h1>Welcome {loggedVisitor}</h1>
+      <ItemsGenerator />
       <List
         items={itemsToTry}
         title="Things to try"
