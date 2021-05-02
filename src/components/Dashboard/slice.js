@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { jsonPlaceholderApi } from '../../api/json-placeholder-api';
-import jsonState from '../../state.json';
+import { TechItemsApi } from '../../api/tech-items-api';
 
 const excludeItem = (item) => (i) => i.id !== item.id;
 
@@ -11,14 +11,15 @@ export const slice = createSlice({
     toTry: [],
     tried: [],
     loading: false,
+    error: false,
   },
 
   reducers: {
-    loadTechItems: (state) => {
+    saveTechItems: (state, { payload: { toTry, tried } }) => {
       return {
         ...state,
-        toTry: jsonState.items.filter((item) => !item.tried),
-        tried: jsonState.items.filter((item) => item.tried),
+        toTry,
+        tried,
       };
     },
 
@@ -41,6 +42,10 @@ export const slice = createSlice({
     loading: (state, { payload: loading }) => {
       state.loading = loading;
     },
+
+    error: (state, { payload: error }) => {
+      state.error = error;
+    },
   },
 });
 
@@ -57,6 +62,21 @@ const asyncActions = {
     dispatch(slice.actions.markAsToTry(item));
     dispatch(slice.actions.loading(false));
   },
+
+  loadTechItems: () => async (dispatch) => {
+    dispatch(slice.actions.loading(true));
+
+    try {
+      const items = await TechItemsApi.listAll();
+      const toTry = items.filter((item) => !item.tried);
+      const tried = items.filter((item) => item.tried);
+      dispatch(slice.actions.saveTechItems({ toTry, tried }));
+    } catch (error) {
+      dispatch(slice.actions.error(error.message));
+    }
+
+    dispatch(slice.actions.loading(false));
+  },
 };
 
 export const actions = {
@@ -65,6 +85,8 @@ export const actions = {
 };
 
 export const selectors = {
+  all: ({ [slice.name]: items }) => items,
+  error: ({ [slice.name]: items }) => items.error,
   loading: ({ [slice.name]: items }) => items.loading,
   tried: ({ [slice.name]: items }) => items.tried,
   toTry: ({ [slice.name]: items }) => items.toTry,
