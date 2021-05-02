@@ -8,12 +8,20 @@ export const slice = createSlice({
   name: 'dashboard',
 
   initialState: {
-    toTry: jsonState.items.filter((item) => !item.tried),
-    tried: jsonState.items.filter((item) => item.tried),
+    toTry: [],
+    tried: [],
     loading: false,
   },
 
   reducers: {
+    loadTechItems: (state) => {
+      return {
+        ...state,
+        toTry: jsonState.items.filter((item) => !item.tried),
+        tried: jsonState.items.filter((item) => item.tried),
+      };
+    },
+
     markAsTried: (state, { payload: item }) => {
       return {
         ...state,

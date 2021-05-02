@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { Redirect } from 'react-router';
@@ -11,6 +12,12 @@ export const Dashboard = () => {
   const dispatch = useDispatch();
   const itemsToTry = useSelector(selectors.toTry);
   const itemsTried = useSelector(selectors.tried);
+
+  useEffect(() => {
+    if (loggedVisitor) {
+      dispatch(actions.loadTechItems());
+    }
+  }, [loggedVisitor, dispatch]);
 
   if (!loggedVisitor) {
     return <Redirect to="/" />;
