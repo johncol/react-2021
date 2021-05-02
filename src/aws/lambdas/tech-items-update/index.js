@@ -11,7 +11,7 @@ const baseResponse = {
 };
 
 // eslint-disable-next-line no-unused-vars
-exports.handler = async (event, _context) => {
+const updateTechItem = async (event, _context) => {
   const { id } = event.pathParameters;
   const { tried } = JSON.parse(event.body);
   try {
@@ -38,3 +38,5 @@ exports.handler = async (event, _context) => {
     };
   }
 };
+
+exports.handler = updateTechItem;

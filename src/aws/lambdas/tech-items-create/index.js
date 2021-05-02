@@ -21,7 +21,7 @@ const emptyString = (field) => {
 };
 
 // eslint-disable-next-line no-unused-vars
-exports.handler = async (event, _context) => {
+const createTechItem = async (event, _context) => {
   const { description, priority } = JSON.parse(event.body);
   if (emptyString(description)) {
     return missingField('description');
@@ -51,3 +51,5 @@ exports.handler = async (event, _context) => {
     };
   }
 };
+
+exports.handler = createTechItem;

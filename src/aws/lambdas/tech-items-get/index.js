@@ -11,7 +11,7 @@ const baseResponse = {
 };
 
 // eslint-disable-next-line no-unused-vars
-exports.handler = async (event, _context) => {
+const getTechItem = async (event, _context) => {
   const { id } = event.pathParameters;
   try {
     const { Item } = await dynamo
@@ -37,3 +37,5 @@ exports.handler = async (event, _context) => {
     };
   }
 };
+
+exports.handler = getTechItem;

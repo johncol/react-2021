@@ -8,8 +8,8 @@ POST {{tech-items-api}}/tech-items HTTP/1.1
 Content-Type: application/json
 
 {
-  "priority": 10,
-  "description": "Sample item from VS awesome Rest Client"
+  "priority": 100,
+  "description": "Update it to tried"
 }
 
 ### CREATE TECH ITEM: missing field
@@ -22,12 +22,12 @@ Content-Type: application/json
 }
 
 ### GET TECH ITEM
-GET {{tech-items-api}}/tech-items/1
+GET {{tech-items-api}}/tech-items/1619991573315
 
 ### UPDATE TECH ITEM
-PUT {{tech-items-api}}/tech-items/1 HTTP/1.1
+PUT {{tech-items-api}}/tech-items/1619991573315 HTTP/1.1
 Content-Type: application/json
 
 {
-  "tried": false
+  "tried": true
 }
