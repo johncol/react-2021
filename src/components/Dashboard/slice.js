@@ -8,8 +8,8 @@ export const slice = createSlice({
   name: 'dashboard',
 
   initialState: {
-    toTry: jsonState.to_try,
-    tried: jsonState.tried,
+    toTry: jsonState.items.filter((item) => !item.tried),
+    tried: jsonState.items.filter((item) => item.tried),
     loading: false,
   },
 
