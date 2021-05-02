@@ -21,3 +21,8 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# lambda function responses using AWS cli
+lambda-response.json
+# zip files for lambda functions
+*.zip

@@ -6,7 +6,6 @@ GET {{tech-items-api}}/tech-items
 ### CREATE TECH ITEM: success
 POST {{tech-items-api}}/tech-items HTTP/1.1
 Content-Type: application/json
-
 {
   "priority": 10,
   "description": "Sample item from VS awesome Rest Client"
@@ -15,8 +14,10 @@ Content-Type: application/json
 ### CREATE TECH ITEM: missing field
 POST {{tech-items-api}}/tech-items HTTP/1.1
 Content-Type: application/json
-
 {
   "priority": 10,
   "name": "Wrong field name"
 }
+
+### GET TECH ITEM
+GET {{tech-items-api}}/tech-items/1
