@@ -36,29 +36,35 @@ aws lambda invoke \
     lambda-response.json
 ```
 
+Delete a lambda function:
+
+```
+aws lambda delete-function --function-name sample-function
+```
+
 Create a lambda function:
 
 ```
-zip tech-items-get.zip index.js
+zip sample-function.zip index.js
 
 aws lambda create-function \
-    --function-name tech-items-get \
+    --function-name sample-function \
     --runtime nodejs14.x \
-    --zip-file fileb://tech-items-get.zip \
+    --zip-file fileb://sample-function.zip \
     --handler index.handler \
     --role arn:aws:iam::295547799037:role/service-role/tech-items-crud-role
 
-rm tech-items-get.zip
+rm sample-function.zip
 ```
 
 ```
-zip tech-items-get.zip index.js
+zip sample-function.zip index.js
 
 aws lambda update-function-code \
-    --function-name tech-items-get \
-    --zip-file fileb://tech-items-get.zip \
+    --function-name sample-function \
+    --zip-file fileb://sample-function.zip \
     --dry-run
 
-rm tech-items-get.zip
+rm sample-function.zip
 
 ```
