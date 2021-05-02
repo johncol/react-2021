@@ -77,6 +77,22 @@ const asyncActions = {
 
     dispatch(slice.actions.loading(false));
   },
+
+  toggleItemTriedStatus: (item) => async (dispatch) => {
+    const toggledItem = { ...item, tried: !item.tried };
+    dispatch(slice.actions.loading(true));
+    try {
+      await TechItemsApi.toggleTriedStatus(toggledItem);
+      if (toggledItem.tried) {
+        dispatch(slice.actions.markAsTried(toggledItem));
+      } else {
+        dispatch(slice.actions.markAsToTry(toggledItem));
+      }
+    } catch (error) {
+      dispatch(slice.actions.error(error.message));
+    }
+    dispatch(slice.actions.loading(false));
+  },
 };
 
 export const actions = {

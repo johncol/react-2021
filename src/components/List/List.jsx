@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
-import './List.css';
 import { ListItem } from './ListItem';
+
+import './List.css';
 
 export const List = ({ title, items, primary, done, onToggle }) => {
   const hasItems = items && items.length > 0;

@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router';
 import { useLoggedVisitor } from '../../hooks/useLoggedVisitor';
+import { Loading } from '../Shared/Loading';
 import { Notification } from '../Shared/Notification';
-import { List } from './../List/List';
+import { List } from './../List';
 import { ItemsGenerator } from './ItemsGenerator';
 import { actions, selectors } from './slice';
 
@@ -23,8 +23,11 @@ export const Dashboard = () => {
     return <Redirect to="/" />;
   }
 
+  const toggleIt = (item) => dispatch(actions.toggleItemTriedStatus(item));
+
   return (
     <>
+      <Loading loading={items.loading} />
       <h1>Welcome {loggedVisitor}</h1>
       <ItemsGenerator visible={false} />
       <Notification visible={items.error} danger>
@@ -35,13 +38,13 @@ export const Dashboard = () => {
         title="Things to try"
         primary
         done={false}
-        onToggle={(item) => dispatch(actions.markAsTried(item))}
+        onToggle={toggleIt}
       />
       <List
         items={items.tried}
-        title="Tried"
+        title="Already tried"
         done={true}
-        onToggle={(item) => dispatch(actions.markAsToTry(item))}
+        onToggle={toggleIt}
       />
     </>
   );
