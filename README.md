@@ -10,6 +10,6 @@ The backend is an AWS API gateway that delegates all routes to individual lambda
 
 ## Resources
 
-For unit testing, react-testing-library is used (out of the box configured with create-react-app). This is an awesome article keep having at hand: https://www.robinwieruch.de/react-testing-library
+For unit testing, react-testing-library is used (out of the box configured with create-react-app). This is an awesome article worth having at hand: https://www.robinwieruch.de/react-testing-library
 
 Also using [Mock Service Worker](https://mswjs.io/) to mock http requests.
