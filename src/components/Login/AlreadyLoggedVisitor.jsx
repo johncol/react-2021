@@ -6,10 +6,13 @@ export const AlreadyLoggedVisitor = () => {
   return (
     <div className="card">
       <div className="card-content">
-        You have already identified yourself{' '}
-        <span className="tag is-info">{loggedVisitor}</span>
-        <br />
-        <Link to="/dashboard">Go to dashboard</Link>
+        <p>
+          You have already identified yourself{' '}
+          <span className="tag is-info">{loggedVisitor}</span>
+        </p>
+        <p>
+          <Link to="/dashboard">Go to dashboard</Link>
+        </p>
       </div>
     </div>
   );

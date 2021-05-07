@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router';
 import { useLoggedVisitor } from '../../hooks/useLoggedVisitor';
 import { AlreadyLoggedVisitor } from './AlreadyLoggedVisitor';
 
 export const Login = () => {
-  const [visitor, setVisitor] = useState('');
+  const history = useHistory();
   const [loggedVisitor, setLoggedVisitor] = useLoggedVisitor();
+  const [visitor, setVisitor] = useState('');
   const validName = visitor.trim().length >= 4;
 
   const handleSubmit = (event) => {
     event.preventDefault();
     setLoggedVisitor(visitor);
+    history.push('/dashboard');
   };
 
   if (loggedVisitor) {
