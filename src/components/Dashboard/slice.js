@@ -53,60 +53,58 @@ export const slice = createSlice({
   },
 });
 
+const httpRequestWrapper = async (dispatch, callback) => {
+  dispatch(slice.actions.loading(true));
+
+  try {
+    await callback();
+  } catch (error) {
+    dispatch(slice.actions.error(error.message));
+  }
+
+  dispatch(slice.actions.loading(false));
+};
+
 const asyncActions = {
   addRandomItemToTry: () => async (dispatch) => {
-    dispatch(slice.actions.loading(true));
-    const randomId = Date.now() % 200;
-    const { title } = await JsonPlaceholderApi.fetchTodo(randomId);
-    const item = {
-      id: Date.now() % randomId,
-      priority: Date.now() % randomId,
-      description: title,
-    };
-    dispatch(slice.actions.markAsToTry(item));
-    dispatch(slice.actions.loading(false));
+    await httpRequestWrapper(dispatch, async () => {
+      const randomId = Date.now() % 200;
+      const { title } = await JsonPlaceholderApi.fetchTodo(randomId);
+      const item = {
+        id: Date.now() % randomId,
+        priority: Date.now() % randomId,
+        description: title,
+      };
+      dispatch(slice.actions.markAsToTry(item));
+    });
   },
 
   loadTechItems: () => async (dispatch) => {
-    dispatch(slice.actions.loading(true));
-
-    try {
+    await httpRequestWrapper(dispatch, async () => {
       const items = await TechItemsApi.listAll();
       const toTry = items.filter((item) => !item.tried);
       const tried = items.filter((item) => item.tried);
       dispatch(slice.actions.saveTechItems({ toTry, tried }));
-    } catch (error) {
-      dispatch(slice.actions.error(error.message));
-    }
-
-    dispatch(slice.actions.loading(false));
+    });
   },
 
   toggleItemTriedStatus: (item) => async (dispatch) => {
     const toggledItem = { ...item, tried: !item.tried };
-    dispatch(slice.actions.loading(true));
-    try {
+    await httpRequestWrapper(dispatch, async () => {
       await TechItemsApi.toggleTriedStatus(toggledItem);
       if (toggledItem.tried) {
         dispatch(slice.actions.markAsTried(toggledItem));
       } else {
         dispatch(slice.actions.markAsToTry(toggledItem));
       }
-    } catch (error) {
-      dispatch(slice.actions.error(error.message));
-    }
-    dispatch(slice.actions.loading(false));
+    });
   },
 
   createNewItem: (description) => async (dispatch) => {
-    dispatch(slice.actions.loading(true));
-    try {
+    await httpRequestWrapper(dispatch, async () => {
       const item = await TechItemsApi.createItem(description);
       dispatch(slice.actions.addNewToTry(item));
-    } catch (error) {
-      dispatch(slice.actions.error(error.message));
-    }
-    dispatch(slice.actions.loading(false));
+    });
   },
 };
 
