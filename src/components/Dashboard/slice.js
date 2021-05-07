@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { jsonPlaceholderApi } from '../../api/json-placeholder-api';
+import { JsonPlaceholderApi } from '../../api/json-placeholder-api';
 import { TechItemsApi } from '../../api/tech-items-api';
 
 const excludeItem = (item) => (i) => i.id !== item.id;
@@ -57,7 +57,7 @@ const asyncActions = {
   addRandomItemToTry: () => async (dispatch) => {
     dispatch(slice.actions.loading(true));
     const randomId = Date.now() % 200;
-    const { title } = await jsonPlaceholderApi.fetchTodo(randomId);
+    const { title } = await JsonPlaceholderApi.fetchTodo(randomId);
     const item = {
       id: Date.now() % randomId,
       priority: Date.now() % randomId,

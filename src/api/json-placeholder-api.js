@@ -5,6 +5,6 @@ const fetchTodo = async (id) => {
   return await response.json();
 };
 
-export const jsonPlaceholderApi = {
+export const JsonPlaceholderApi = {
   fetchTodo,
 };
