@@ -2,7 +2,7 @@ export const ListItem = ({ item, onToggle, onDelete }) => {
   const toggleAction = item.tried ? 'Undo' : 'Done';
 
   return (
-    <li className="card">
+    <li className="card list-item">
       <div className="card-content">
         <div className="content">{item.description}</div>
       </div>
