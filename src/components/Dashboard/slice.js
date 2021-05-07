@@ -2,7 +2,9 @@ import { createSlice } from '@reduxjs/toolkit';
 import { JsonPlaceholderApi } from '../../api/json-placeholder-api';
 import { TechItemsApi } from '../../api/tech-items-api';
 
-const excludeItem = (item) => (i) => i.id !== item.id;
+const getListKeys = (item) => {
+  return item.tried ? ['tried', 'toTry'] : ['toTry', 'tried'];
+};
 
 export const slice = createSlice({
   name: 'dashboard',
@@ -15,7 +17,7 @@ export const slice = createSlice({
   },
 
   reducers: {
-    saveTechItems: (state, { payload: { toTry, tried } }) => {
+    saveItemsInStore: (state, { payload: { toTry, tried } }) => {
       return {
         ...state,
         toTry,
@@ -23,23 +25,20 @@ export const slice = createSlice({
       };
     },
 
-    markAsTried: (state, { payload: item }) => {
-      state.toTry = state.toTry.filter(excludeItem(item));
-      state.tried.push(item);
+    toggleInStore: (state, { payload: item }) => {
+      const [list, other] = getListKeys(item);
+      state[list].push(item);
+      state[other] = state[other].filter(({ id }) => id !== item.id);
     },
 
-    markAsToTry: (state, { payload: item }) => {
-      state.toTry.push(item);
-      state.tried = state.tried.filter(excludeItem(item));
-    },
-
-    removeFromList: (state, { payload: item }) => {
-      const list = item.tried ? 'tried' : 'toTry';
+    removeFromStore: (state, { payload: item }) => {
+      const [list] = getListKeys(item);
       state[list] = state[list].filter(({ id }) => id !== item.id);
     },
 
-    addNewToTry: (state, { payload: item }) => {
-      state.toTry.push(item);
+    addToStore: (state, { payload: item }) => {
+      const [list] = getListKeys(item);
+      state[list].push(item);
     },
 
     loading: (state, { payload: loading }) => {
@@ -74,7 +73,7 @@ const asyncActions = {
         priority: Date.now() % randomId,
         description: title,
       };
-      dispatch(slice.actions.markAsToTry(item));
+      dispatch(slice.actions.addToStore(item));
     });
   },
 
@@ -83,7 +82,7 @@ const asyncActions = {
       const { Items: items } = await TechItemsApi.listAll();
       const toTry = items.filter((item) => !item.tried);
       const tried = items.filter((item) => item.tried);
-      dispatch(slice.actions.saveTechItems({ toTry, tried }));
+      dispatch(slice.actions.saveItemsInStore({ toTry, tried }));
     });
   },
 
@@ -91,25 +90,21 @@ const asyncActions = {
     const toggledItem = { ...item, tried: !item.tried };
     await httpRequestWrapper(dispatch, async () => {
       await TechItemsApi.toggleTriedStatus(toggledItem);
-      if (toggledItem.tried) {
-        dispatch(slice.actions.markAsTried(toggledItem));
-      } else {
-        dispatch(slice.actions.markAsToTry(toggledItem));
-      }
+      dispatch(slice.actions.toggleInStore(toggledItem));
     });
   },
 
   createNewItem: (description) => async (dispatch) => {
     await httpRequestWrapper(dispatch, async () => {
       const item = await TechItemsApi.createItem(description);
-      dispatch(slice.actions.addNewToTry(item));
+      dispatch(slice.actions.addToStore(item));
     });
   },
 
   deleteItem: (item) => async (dispatch) => {
     await httpRequestWrapper(dispatch, async () => {
       await TechItemsApi.deleteItem(item);
-      dispatch(slice.actions.removeFromList(item));
+      dispatch(slice.actions.removeFromStore(item));
     });
   },
 };
