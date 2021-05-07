@@ -2,7 +2,7 @@ import { TechItemsApi } from './tech-items-api';
 
 describe('TechItemsApi', () => {
   it('should request the list of items with GET /tech-items', async () => {
-    const items = await TechItemsApi.listAll();
+    const { Items: items } = await TechItemsApi.listAll();
 
     expect(items).toBeDefined();
     expect(items).toHaveLength(1);

@@ -1,11 +1,17 @@
 import { useMemo } from 'react';
+import { useDispatch } from 'react-redux';
 import { ListItem } from './ListItem';
+import { actions } from '../Dashboard/slice';
 
 import './List.css';
 
-export const List = ({ title, items, primary, done, onToggle }) => {
+export const List = ({ title, items, primary }) => {
   const hasItems = items && items.length > 0;
   const itemsSortedByPriority = useMemo(() => sortByPriority(items), [items]);
+  const dispatch = useDispatch();
+
+  const toggleIt = (item) => dispatch(actions.toggleItemTriedStatus(item));
+  const deleteIt = (item) => dispatch(actions.deleteItem(item));
 
   return (
     <section className={`list panel is-${primary ? 'primary' : 'info'}`}>
@@ -16,9 +22,9 @@ export const List = ({ title, items, primary, done, onToggle }) => {
             {itemsSortedByPriority.map((item) => (
               <ListItem
                 key={item.id}
-                value={item.description}
-                done={done}
-                onActionTrigger={() => onToggle(item)}
+                item={item}
+                onToggle={toggleIt}
+                onDelete={deleteIt}
               />
             ))}
           </ol>

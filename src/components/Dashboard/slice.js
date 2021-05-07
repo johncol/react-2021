@@ -24,19 +24,18 @@ export const slice = createSlice({
     },
 
     markAsTried: (state, { payload: item }) => {
-      return {
-        ...state,
-        toTry: state.toTry.filter(excludeItem(item)),
-        tried: state.tried.concat(item),
-      };
+      state.toTry = state.toTry.filter(excludeItem(item));
+      state.tried.push(item);
     },
 
     markAsToTry: (state, { payload: item }) => {
-      return {
-        ...state,
-        toTry: state.toTry.concat(item),
-        tried: state.tried.filter(excludeItem(item)),
-      };
+      state.toTry.push(item);
+      state.tried = state.tried.filter(excludeItem(item));
+    },
+
+    removeFromList: (state, { payload: item }) => {
+      const list = item.tried ? 'tried' : 'toTry';
+      state[list] = state[list].filter(({ id }) => id !== item.id);
     },
 
     addNewToTry: (state, { payload: item }) => {
@@ -81,7 +80,7 @@ const asyncActions = {
 
   loadTechItems: () => async (dispatch) => {
     await httpRequestWrapper(dispatch, async () => {
-      const items = await TechItemsApi.listAll();
+      const { Items: items } = await TechItemsApi.listAll();
       const toTry = items.filter((item) => !item.tried);
       const tried = items.filter((item) => item.tried);
       dispatch(slice.actions.saveTechItems({ toTry, tried }));
@@ -104,6 +103,13 @@ const asyncActions = {
     await httpRequestWrapper(dispatch, async () => {
       const item = await TechItemsApi.createItem(description);
       dispatch(slice.actions.addNewToTry(item));
+    });
+  },
+
+  deleteItem: (item) => async (dispatch) => {
+    await httpRequestWrapper(dispatch, async () => {
+      await TechItemsApi.deleteItem(item);
+      dispatch(slice.actions.removeFromList(item));
     });
   },
 };

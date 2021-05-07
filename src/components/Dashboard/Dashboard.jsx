@@ -24,8 +24,6 @@ export const Dashboard = () => {
     return <Redirect to="/" />;
   }
 
-  const toggleIt = (item) => dispatch(actions.toggleItemTriedStatus(item));
-
   return (
     <>
       <Loading loading={items.loading} />
@@ -35,19 +33,8 @@ export const Dashboard = () => {
       <Notification visible={items.error} danger>
         Tech Items API: {items.error}
       </Notification>
-      <List
-        items={items.toTry}
-        title="Things to try"
-        primary
-        done={false}
-        onToggle={toggleIt}
-      />
-      <List
-        items={items.tried}
-        title="Already tried"
-        done={true}
-        onToggle={toggleIt}
-      />
+      <List items={items.toTry} title="Things to try" primary />
+      <List items={items.tried} title="Already tried" />
     </>
   );
 };

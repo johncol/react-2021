@@ -1,11 +1,14 @@
+import { ApiShared } from './api-shared';
+
 const host = process.env.REACT_APP_TECH_ITEMS_API;
 
 const listAll = async () => {
   const response = await fetch(`${host}/tech-items`);
-  if (!response.ok) {
-    throw new Error(`Items cound not be fetched. ${response.message}`);
-  }
-  return (await response.json()).Items;
+
+  return await ApiShared.parseOrElse(
+    response,
+    `Items cound not be fetched. ${response.message}`
+  );
 };
 
 const toggleTriedStatus = async (item) => {
@@ -19,11 +22,10 @@ const toggleTriedStatus = async (item) => {
     },
   });
 
-  if (!response.ok) {
-    throw new Error(`Item ${id} cound not be updated. ${response.message}`);
-  }
-
-  return await response.json();
+  return await ApiShared.parseOrElse(
+    response,
+    `Item ${id} cound not be updated. ${response.message}`
+  );
 };
 
 const createItem = async (description) => {
@@ -35,15 +37,26 @@ const createItem = async (description) => {
     body: JSON.stringify({ description }),
   });
 
-  if (!response.ok) {
-    throw new Error(`Error creating the item "${description}"`);
-  }
+  return await ApiShared.parseOrElse(
+    response,
+    `Error creating the item "${description}"`
+  );
+};
 
-  return await response.json();
+const deleteItem = async (item) => {
+  const response = await fetch(`${host}/tech-items/${item.id}`, {
+    method: 'DELETE',
+  });
+
+  return await ApiShared.parseOrElse(
+    response,
+    `Error deleting the item "${item.description}"`
+  );
 };
 
 export const TechItemsApi = {
   listAll,
   toggleTriedStatus,
   createItem,
+  deleteItem,
 };
