@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router';
 import { useLoggedVisitor } from '../../hooks/useLoggedVisitor';
+import { NewItemForm } from '../NewItemForm/NewItemForm';
 import { Loading } from '../Shared/Loading';
 import { Notification } from '../Shared/Notification';
 import { List } from './../List';
@@ -29,6 +30,7 @@ export const Dashboard = () => {
     <>
       <Loading loading={items.loading} />
       <h1>Welcome {loggedVisitor}</h1>
+      <NewItemForm />
       <ItemsGenerator visible={false} />
       <Notification visible={items.error} danger>
         Tech Items API: {items.error}

@@ -3,7 +3,7 @@ const host = process.env.REACT_APP_TECH_ITEMS_API;
 const listAll = async () => {
   const response = await fetch(`${host}/tech-items`);
   if (!response.ok) {
-    return `Items cound not be fetched. ${response.message}`;
+    throw new Error(`Items cound not be fetched. ${response.message}`);
   }
   return (await response.json()).Items;
 };
@@ -20,7 +20,23 @@ const toggleTriedStatus = async (item) => {
   });
 
   if (!response.ok) {
-    return `Item ${id} cound not be updated. ${response.message}`;
+    throw new Error(`Item ${id} cound not be updated. ${response.message}`);
+  }
+
+  return await response.json();
+};
+
+const createItem = async (description) => {
+  const response = await fetch(`${host}/tech-items`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ description }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Error creating the item "${description}"`);
   }
 
   return await response.json();
@@ -29,4 +45,5 @@ const toggleTriedStatus = async (item) => {
 export const TechItemsApi = {
   listAll,
   toggleTriedStatus,
+  createItem,
 };

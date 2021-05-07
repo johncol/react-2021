@@ -39,6 +39,10 @@ export const slice = createSlice({
       };
     },
 
+    addNewToTry: (state, { payload: item }) => {
+      state.toTry.push(item);
+    },
+
     loading: (state, { payload: loading }) => {
       state.loading = loading;
     },
@@ -88,6 +92,17 @@ const asyncActions = {
       } else {
         dispatch(slice.actions.markAsToTry(toggledItem));
       }
+    } catch (error) {
+      dispatch(slice.actions.error(error.message));
+    }
+    dispatch(slice.actions.loading(false));
+  },
+
+  createNewItem: (description) => async (dispatch) => {
+    dispatch(slice.actions.loading(true));
+    try {
+      const item = await TechItemsApi.createItem(description);
+      dispatch(slice.actions.addNewToTry(item));
     } catch (error) {
       dispatch(slice.actions.error(error.message));
     }
